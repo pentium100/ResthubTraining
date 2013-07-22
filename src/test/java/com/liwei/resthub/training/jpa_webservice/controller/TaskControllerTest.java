@@ -5,7 +5,7 @@ import org.resthub.test.AbstractWebTest;
 import org.testng.annotations.Test;
 
 import com.liwei.resthub.training.jpa_webservice.model.Task;
-import com.liwei.resthub.training.jpa_webservice.model.User;
+import com.liwei.resthub.training.jpa_webservice.model.EndUser;
 
 public class TaskControllerTest extends AbstractWebTest {
 
@@ -30,11 +30,11 @@ public class TaskControllerTest extends AbstractWebTest {
 	public void testAffectTaskToUser() {
 		Task task = this.request("api/task").xmlPost(new Task("task1"))
 				.resource(Task.class);
-		User user = this.request("api/user")
-				.xmlPost(new User("user1", "user1@test.org"))
-				.resource(User.class);
+		EndUser endUser = this.request("api/user")
+				.xmlPost(new EndUser("user1", "user1@test.org"))
+				.resource(EndUser.class);
 		String responseBody = this
-				.request("api/task/" + task.getId() + "/user/" + user.getId())
+				.request("api/task/" + task.getId() + "/user/" + endUser.getId())
 				.put("").getBody();
 		Assertions.assertThat(responseBody).isNotEmpty();
 		Assertions.assertThat(responseBody).contains("task1");

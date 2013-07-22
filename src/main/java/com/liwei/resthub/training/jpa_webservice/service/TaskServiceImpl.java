@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import com.liwei.resthub.training.jpa_webservice.model.Task;
-import com.liwei.resthub.training.jpa_webservice.model.User;
+import com.liwei.resthub.training.jpa_webservice.model.EndUser;
 import com.liwei.resthub.training.jpa_webservice.repository.TaskRepository;
 import com.liwei.resthub.training.jpa_webservice.repository.UserRepository;
 
@@ -54,26 +54,26 @@ public class TaskServiceImpl extends
 		Assert.notNull(userId, "userId should not be null");
 		Assert.notNull(taskId, "taskId should not be null");
 
-		User user = this.userRepository.findOne(userId);
-		Assert.notNull(user, "userId should correspond to a valid user");
+		EndUser endUser = this.userRepository.findOne(userId);
+		Assert.notNull(endUser, "userId should correspond to a valid user");
 
 		Task task = this.repository.findOne(taskId);
 		Assert.notNull(task, "taskId should correspond to a valid task");
 
-		if (task.getUser() != null && task.getUser() != user) {
-			if (task.getUser().getEmail() != null) {
-				this.notificationService.send(task.getUser().getEmail(),
+		if (task.getEndUser() != null && task.getEndUser() != endUser) {
+			if (task.getEndUser().getEmail() != null) {
+				this.notificationService.send(task.getEndUser().getEmail(),
 						"The task " + task.getTitle() + " has been reaffected");
 			}
 		}
 
-		if (user.getEmail() != null) {
+		if (endUser.getEmail() != null) {
 			this.notificationService
-					.send(user.getEmail(), "The task " + task.getTitle()
+					.send(endUser.getEmail(), "The task " + task.getTitle()
 							+ " has been affected to you");
 		}
 
-		task.setUser(user);
+		task.setEndUser(endUser);
 
 		return task;
 	}

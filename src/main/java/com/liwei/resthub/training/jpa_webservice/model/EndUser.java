@@ -16,7 +16,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class User {
+public class EndUser {
 
 	private Long id;
 	private String name;
@@ -35,15 +35,15 @@ public class User {
 		this.address = address;
 	}
 
-	public User() {
+	public EndUser() {
 		super();
 	}
 
-	public User(String name) {
+	public EndUser(String name) {
 		this.name = name;
 	}
 
-	public User(String name, String email) {
+	public EndUser(String name, String email) {
 		this(name);
 		this.email = email;
 	}
@@ -79,7 +79,7 @@ public class User {
 	}
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "endUser")
 	public List<Task> getTasks() {
 		return tasks;
 	}
@@ -92,12 +92,12 @@ public class User {
 	public boolean equals(Object o) {
 		if (this == o)
 			return true;
-		if (!(o instanceof User))
+		if (!(o instanceof EndUser))
 			return false;
 
-		User user = (User) o;
+		EndUser endUser = (EndUser) o;
 
-		if (id != null ? !id.equals(user.id) : user.id != null)
+		if (id != null ? !id.equals(endUser.id) : endUser.id != null)
 			return false;
 
 		return true;

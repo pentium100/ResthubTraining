@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 
 import com.liwei.resthub.training.MocksConfiguration;
 import com.liwei.resthub.training.jpa_webservice.model.Task;
-import com.liwei.resthub.training.jpa_webservice.model.User;
+import com.liwei.resthub.training.jpa_webservice.model.EndUser;
 import com.liwei.resthub.training.jpa_webservice.repository.UserRepository;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
@@ -38,23 +38,23 @@ public class TaskServiceIntegrationTest extends AbstractTest {
 
 	@Test
 	public void testAffectTask() {
-		User user = this.userRepository.save(new User("userName",
+		EndUser endUser = this.userRepository.save(new EndUser("userName",
 				"user.email@test.org"));
 		Task task = this.taskService.create(new Task("taskName"));
-		this.taskService.affectTaskToUser(task.getId(), user.getId());
+		this.taskService.affectTaskToUser(task.getId(), endUser.getId());
 
 		task = this.taskService.findById(task.getId());
-		Assertions.assertThat(task.getUser()).isNotNull();
-		Assertions.assertThat(task.getUser()).isEqualTo(user);
+		Assertions.assertThat(task.getEndUser()).isNotNull();
+		Assertions.assertThat(task.getEndUser()).isEqualTo(endUser);
 
-		User newUser = this.userRepository.save(new User("userName2",
+		EndUser newUser = this.userRepository.save(new EndUser("userName2",
 				"user2.email@test.org"));
 
 		this.taskService.affectTaskToUser(task.getId(), newUser.getId());
 
 		task = this.taskService.findById(task.getId());
-		Assertions.assertThat(task.getUser()).isNotNull();
-		Assertions.assertThat(task.getUser()).isEqualTo(newUser);
+		Assertions.assertThat(task.getEndUser()).isNotNull();
+		Assertions.assertThat(task.getEndUser()).isEqualTo(newUser);
 
 		verify(mockedNotificationService, times(3)).send(anyString(),
 				anyString());

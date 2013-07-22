@@ -50,6 +50,10 @@ require.config({
 		},
 		'async' : {
 			exports : 'async'
+		},
+		'w2ui' : {
+			deps : ['jquery'],
+			exports : 'w2ui'
 		}
 	},
 
@@ -82,9 +86,10 @@ require.config({
 		console : 'lib/resthub/console',
 		'backgrid' : 'lib/backgrid/backgrid',
 		'backgrid-paginator' : 'lib/backgrid/extensions/paginator/backgrid-paginator',
-		'backbone-pageable' : 'lib/backbone-pageable'
+		'backbone-pageable' : 'lib/backbone-pageable',
+		'w2ui' : 'lib/w2ui/w2ui-1.2'
 	}
 });
 
 // Load our app module and pass it to our definition function
-require(['console', 'app-paginator']);
+require(['console', 'app']);

@@ -15,7 +15,7 @@ public class Task {
 	private String title;
 	private String description;
 
-	private User user;
+	private EndUser endUser;
 
 	public Task() {
 		super();
@@ -26,9 +26,9 @@ public class Task {
 		this.title = title;
 	}
 
-	public Task(String title, User user) {
+	public Task(String title, EndUser endUser) {
 		this(title);
-		this.user = user;
+		this.endUser = endUser;
 	}
 
 	@Id
@@ -60,11 +60,11 @@ public class Task {
 	}
 
 	@ManyToOne
-	public User getUser() {
-		return user;
+	public EndUser getEndUser() {
+		return endUser;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setEndUser(EndUser endUser) {
+		this.endUser = endUser;
 	}
 }
